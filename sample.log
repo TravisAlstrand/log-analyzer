@@ -1,0 +1,28 @@
+2026-04-30 09:58:12 SUCCESS_LOGIN user=john ip=192.168.1.15
+2026-04-30 10:00:01 FAILED_LOGIN user=admin ip=192.168.1.10
+2026-04-30 10:00:05 FAILED_LOGIN user=admin ip=192.168.1.10
+2026-04-30 10:00:09 FAILED_LOGIN user=admin ip=192.168.1.10
+2026-04-30 10:00:15 FAILED_LOGIN user=admin ip=192.168.1.10
+2026-04-30 10:00:20 SUCCESS_LOGIN user=admin ip=192.168.1.10
+2026-04-30 10:01:33 FILE_ACCESS user=john file=/etc/passwd action=read
+2026-04-30 10:02:10 FAILED_LOGIN user=root ip=10.0.0.5
+2026-04-30 10:02:14 FAILED_LOGIN user=root ip=10.0.0.5
+2026-04-30 10:02:18 FAILED_LOGIN user=root ip=10.0.0.5
+2026-04-30 10:03:02 FAILED_LOGIN user=guest ip=172.16.0.3
+2026-04-30 10:03:05 FAILED_LOGIN user=guest ip=172.16.0.3
+2026-04-30 10:03:07 FAILED_LOGIN user=guest ip=172.16.0.3
+2026-04-30 10:03:09 FAILED_LOGIN user=guest ip=172.16.0.3
+2026-04-30 10:04:22 PROCESS_START user=john process=vim pid=4321
+2026-04-30 10:05:11 PROCESS_START user=admin process=netcat pid=5521
+2026-04-30 10:05:25 NETWORK_CONNECTION user=admin src_ip=192.168.1.10 dst_ip=8.8.8.8 port=4444
+2026-04-30 10:06:42 FILE_ACCESS user=admin file=/var/log/auth.log action=delete
+2026-04-30 10:07:03 PRIV_ESCALATION user=john method=sudo
+2026-04-30 10:07:55 FAILED_LOGIN user=admin ip=203.0.113.50
+2026-04-30 10:08:01 FAILED_LOGIN user=admin ip=203.0.113.50
+2026-04-30 10:08:07 FAILED_LOGIN user=admin ip=203.0.113.50
+2026-04-30 10:08:12 FAILED_LOGIN user=admin ip=203.0.113.50
+2026-04-30 10:08:18 FAILED_LOGIN user=admin ip=203.0.113.50
+2026-04-30 10:09:30 SUCCESS_LOGIN user=admin ip=203.0.113.50
+2026-04-30 10:10:45 PROCESS_START user=root process=unknown_binary pid=9999
+2026-04-30 10:11:12 NETWORK_CONNECTION user=root src_ip=10.0.0.5 dst_ip=198.51.100.25 port=22
+2026-04-30 10:12:00 FILE_ACCESS user=root file=/etc/shadow action=read
