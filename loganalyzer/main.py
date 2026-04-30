@@ -9,8 +9,9 @@ def detect(
     file: str,
     failed_logins: bool = False,
     suspicious_ips: bool = False,
+    all: bool = False
 ):
-    results = run_detection(file, failed_logins, suspicious_ips)
+    results = run_detection(file, failed_logins, suspicious_ips, all)
 
     for item in results:
         print(item)
