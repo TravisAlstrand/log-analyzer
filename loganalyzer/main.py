@@ -1,6 +1,6 @@
 import typer
-from parser import parse_log
-from detector import detect_failed_login_attempts, detect_suspicious_ips
+from parsers.parser import parse_log
+from reports.detect import detect_failed_login_attempts, detect_suspicious_ips
 
 app = typer.Typer()
 
