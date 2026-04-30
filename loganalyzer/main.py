@@ -1,50 +1,19 @@
+from loganalyzer.reports.detect import run_detection
 import typer
-from parsers.parser import parse_log
-from reports.detect import detect_failed_login_attempts, detect_suspicious_ips
 
 app = typer.Typer()
 
 
 @app.command()
-def analyze(
+def detect(
     file: str,
     failed_logins: bool = False,
-    suspicious_ips: bool = False
+    suspicious_ips: bool = False,
 ):
-    parsed_logs = parse_log(file)
+    results = run_detection(file, failed_logins, suspicious_ips)
 
-    if failed_logins:
-        results = detect_failed_login_attempts(parsed_logs)
-        print(f"--{len(results)} FAILED LOGIN ATTEMPTS DETECTED--")
-        for result in results:
-            print(result)
-    elif suspicious_ips:
-        results = []
-        user_input = input("What is the threshold? (3 is default) ")
-
-        if user_input.strip() == "":
-            results = detect_suspicious_ips(parsed_logs)
-        else:
-            try:
-                threshold = int(user_input)
-                results = detect_suspicious_ips(parsed_logs, threshold)
-            except ValueError:
-                print("Not a valid threshold input. Using default of 3.")
-                results = detect_suspicious_ips(parsed_logs)
-
-        for result in results:
-            print(result)
-    else:
-        print("--ALL LOGS--")
-        for log in parsed_logs:
-            for key, value in log.items():
-                if key == "details":
-                    print("details")
-                    for d_key, d_value in value.items():
-                        print(f"  {d_key}: {d_value}")
-                else:
-                    print(f"{key}: {value}")
-            print("----------------------\n")
+    for item in results:
+        print(item)
 
 
 if __name__ == "__main__":
