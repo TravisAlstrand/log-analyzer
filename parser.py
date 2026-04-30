@@ -1,4 +1,13 @@
 def parse_log(filepath):
+    """
+    Parse a log file into structured log entries.
+
+    Args:
+        filepath (str): Path to the log file.
+
+    Returns:
+        list[dict]: Parsed log entries with timestamp, event, and details.
+    """
     logs = []
 
     with open(filepath, "r") as log_file:
