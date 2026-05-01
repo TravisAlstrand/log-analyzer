@@ -1,4 +1,5 @@
 from loganalyzer.reports.detect import run_detection
+from loganalyzer.reports.stats import get_stats
 import typer
 
 app = typer.Typer()
@@ -15,6 +16,14 @@ def detect(
 
     for item in results:
         print(item)
+
+
+@app.command()
+def stats(file: str):
+    stats = get_stats(file)
+
+    for stat in stats:
+        print(stat)
 
 
 if __name__ == "__main__":
