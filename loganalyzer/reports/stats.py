@@ -29,6 +29,11 @@ def compose_stats(logs: list[dict]) -> list[str]:
     ip_activities = get_ip_activity(logs)
     for activity in ip_activities:
         stats.append(activity)
+    stats.append("--- AUTHENTICATION RATIO ---")
+    successes, fails, ratio = get_auth_ratio(logs)
+    stats.append(f"  - Successful Logins: {successes}")
+    stats.append(f"  - Failed Logins: {fails}")
+    stats.append(f"  - Failure Rate: {ratio:.2f}%")
 
     return stats
 
@@ -97,3 +102,23 @@ def get_ip_activity(logs: list[dict]) -> list[str]:
 
     results.append("")
     return results
+
+
+def get_auth_ratio(logs: list[dict]) -> tuple[int, int, float]:
+    successful_logins = 0
+    failed_logins = 0
+    failure_rate = 0
+
+    for log in logs:
+        if log["event"] == "SUCCESS_LOGIN":
+            successful_logins += 1
+
+        if log["event"] == "FAILED_LOGIN":
+            failed_logins += 1
+
+    total = failed_logins + successful_logins
+
+    if total != 0:
+        failure_rate = (failed_logins / total) * 100
+
+    return successful_logins, failed_logins, failure_rate
