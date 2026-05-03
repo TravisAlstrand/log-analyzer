@@ -21,6 +21,14 @@ def compose_stats(logs: list[dict]) -> list[str]:
     event_types = get_event_counts(logs)
     for event in event_types:
         stats.append(event)
+    stats.append("--- USER ACTIVITY SUMMARY ---\n")
+    user_activities = get_user_activity(logs)
+    for activity in user_activities:
+        stats.append(activity)
+    stats.append("--- IP ACTIVITY SUMMARY ---\n")
+    ip_activities = get_ip_activity(logs)
+    for activity in ip_activities:
+        stats.append(activity)
 
     return stats
 
@@ -51,4 +59,41 @@ def get_event_counts(logs: list[dict]) -> list[str]:
     for event, count in event_count.items():
         results.append(f"  - {event}: {count}")
 
+    results.append("")
+    return results
+
+
+def get_user_activity(logs: list[dict]) -> list[str]:
+    results = []
+    user_activities = defaultdict(int)
+
+    for log in logs:
+        user = log["details"].get("user", "unknown")
+        user_activities[user] += 1
+
+    sorted_activities = dict(
+        sorted(user_activities.items(), key=lambda item: item[1], reverse=True))
+
+    for user, count in sorted_activities.items():
+        results.append(f"  - {user}: {count} events")
+
+    results.append("")
+    return results
+
+
+def get_ip_activity(logs: list[dict]) -> list[str]:
+    results = []
+    ip_activities = defaultdict(int)
+
+    for log in logs:
+        ip = log["details"].get("ip", "unknown")
+        ip_activities[ip] += 1
+
+    sorted_activities = dict(
+        sorted(ip_activities.items(), key=lambda item: item[1], reverse=True))
+
+    for ip, count in sorted_activities.items():
+        results.append(f"  - {ip}: {count} events")
+
+    results.append("")
     return results
