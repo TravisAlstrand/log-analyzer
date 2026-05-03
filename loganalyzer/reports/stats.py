@@ -61,7 +61,10 @@ def get_event_counts(logs: list[dict]) -> list[str]:
         event = log["event"]
         event_count[event] += 1
 
-    for event, count in event_count.items():
+    sorted_events = dict(
+        sorted(event_count.items(), key=lambda item: item[1], reverse=True))
+
+    for event, count in sorted_events.items():
         results.append(f"  - {event}: {count}")
 
     results.append("")
