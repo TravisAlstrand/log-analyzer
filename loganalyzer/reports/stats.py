@@ -29,12 +29,14 @@ def compose_stats(logs: list[dict]) -> list[str]:
     ip_activities = get_ip_activity(logs)
     for activity in ip_activities:
         stats.append(activity)
-    stats.append("--- AUTHENTICATION RATIO ---")
+    stats.append("--- AUTHENTICATION RATIO ---\n")
     successes, fails, ratio = get_auth_ratio(logs)
     stats.append(f"  - Successful Logins: {successes}")
     stats.append(f"  - Failed Logins: {fails}")
-    stats.append(f"  - Failure Rate: {ratio:.2f}%")
-
+    stats.append(f"  - Failure Rate: {ratio:.2f}%\n")
+    stats.append("--- MOST COMMON EVENT ---\n")
+    event, count = get_most_common_event(logs)
+    stats.append(f"  - {event} ({count} occurrences)")
     return stats
 
 
@@ -125,3 +127,19 @@ def get_auth_ratio(logs: list[dict]) -> tuple[int, int, float]:
         failure_rate = (failed_logins / total) * 100
 
     return successful_logins, failed_logins, failure_rate
+
+
+def get_most_common_event(logs: list[dict]) -> tuple[str, int]:
+    counts = defaultdict(int)
+
+    for log in logs:
+        event = log["event"]
+        counts[event] += 1
+
+    sorted_events = dict(
+        sorted(counts.items(), key=lambda item: item[1], reverse=True))
+
+    first_key = next(iter(sorted_events))
+    first_value = next(iter(sorted_events.values()))
+
+    return first_key, first_value
